@@ -36,7 +36,7 @@ public class TrelloClient {
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(getURL(), TrelloBoardDto[].class);
 
-        return Optional.of(Arrays.asList(boardsResponse)).orElse(new ArrayList<>());
+        return Optional.ofNullable(Arrays.asList(boardsResponse)).orElse(new ArrayList<>());
         }
 
     private URI getURL() {
