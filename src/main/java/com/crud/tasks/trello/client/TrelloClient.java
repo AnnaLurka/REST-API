@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Optional.ofNullable;
+
 @Component
 public class TrelloClient {
 
@@ -34,8 +36,8 @@ public class TrelloClient {
 
         try {
             TrelloBoardDto[] boardsResponse = restTemplate.getForObject(getURL(), TrelloBoardDto[].class);
-            return Optional.ofNullable(Arrays.asList(boardsResponse)).orElse(new ArrayList<>());
-            //return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
+           // return Optional.ofNullable(Arrays.asList(boardsResponse)).orElse(new ArrayList<>());
+            return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return new ArrayList<>();
