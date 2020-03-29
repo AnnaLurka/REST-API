@@ -1,6 +1,6 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreatedTrelloCard;
+import com.crud.tasks.domain.CreatedTrelloCardDto;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
@@ -14,9 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -45,7 +43,7 @@ public class TrelloClientTest {
     public void shouldFetchTrelloBoards() throws URISyntaxException {
         //Given
         TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
-        trelloBoards[0] = new TrelloBoardDto("test_id", "test_board", new ArrayList<>());//liczba list
+        trelloBoards[0] = new TrelloBoardDto("test_id", "test_board", new ArrayList<>());
 
         URI uri = new URI("http://test.com/members/anna_katarzyna/boards?key=test&token=test&fields=name,id&lists=all");
 
@@ -74,16 +72,16 @@ public class TrelloClientTest {
 
         URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
 
-        CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
                 "1",
                 "Test task",
                 "http://test.com"
         );
 
-        when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(createdTrelloCardDto);
 
         //When
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         //Then
         assertEquals("1", newCard.getId());
