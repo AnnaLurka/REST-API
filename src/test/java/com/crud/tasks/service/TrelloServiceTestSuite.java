@@ -1,10 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
-import com.crud.tasks.domain.CreatedTrelloCardDto;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.trello.client.TrelloClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,6 +27,9 @@ public class TrelloServiceTestSuite {
 
     @Mock
     AdminConfig adminConfig;
+
+    @Mock
+    SimpleEmailService emailService;
 
     @Test
     public void testFetchTrelloBoards() {
@@ -48,18 +49,20 @@ public class TrelloServiceTestSuite {
         assertEquals(trelloListDtos, result.get(0).getLists());
     }
 
-//    @Test
-//    public void testCreateTrelloCard() {
-//        //Given
-//        TrelloCardDto trelloCardDto = new TrelloCardDto("name", "description", "pos", "listId");
-//        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", "name", "shortUrl");
-//        when(trelloClient.createNewCard(trelloCardDto)).thenReturn(Optional.ofNullable(createdTrelloCardDto));
-//        when(adminConfig.getAdminMail()).thenReturn("adminMail");
-//        //When
-//        CreatedTrelloCardDto newCard = trelloService.createTrelloCard(trelloCardDto);
-//        //Then
-//        assertEquals("1", newCard.getId());
-//        assertEquals("name", newCard.getName());
-//        assertEquals("shortUrl", newCard.getShortUrl());
-//    }
+    @Test
+    public void testCreateTrelloCard() {
+        //Given
+        Mail mail = new Mail("mailTo", "subject", "message");
+        TrelloCardDto trelloCardDto = new TrelloCardDto("name", "description", "pos", "listId");
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", "name", "shortUrl");
+        when(trelloClient.createNewCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
+        when(adminConfig.getAdminMail()).thenReturn("adminMail");
+        doNothing().when(emailService).send(mail);
+        //When
+        CreatedTrelloCardDto newCard = trelloService.createTrelloCard(trelloCardDto);
+        //Then
+        assertEquals("1", newCard.getId());
+        assertEquals("name", newCard.getName());
+        assertEquals("shortUrl", newCard.getShortUrl());
+    }
 }
