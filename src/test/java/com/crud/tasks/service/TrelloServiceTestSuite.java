@@ -57,7 +57,6 @@ public class TrelloServiceTestSuite {
         CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("1", "name", "shortUrl");
         when(trelloClient.createNewCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
         when(adminConfig.getAdminMail()).thenReturn("adminMail");
-        doNothing().when(emailService).send(mail);
         //When
         CreatedTrelloCardDto newCard = trelloService.createTrelloCard(trelloCardDto);
         //Then

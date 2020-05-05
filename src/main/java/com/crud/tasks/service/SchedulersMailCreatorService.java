@@ -8,11 +8,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
-public class MailCreatorService {
+public class SchedulersMailCreatorService{
 
     @Autowired
     private AdminConfig adminConfig;
@@ -24,19 +21,14 @@ public class MailCreatorService {
     @Qualifier("templateEngine")
     private TemplateEngine templateEngine;
 
-    public String buildTrelloCardEmail(String message) {
-
-        List<String> functionality = new ArrayList<>();
-        functionality.add("You can manage your tasks");
-        functionality.add("Provides connection with Trello Account");
-        functionality.add("Appplication allows sending tasks to Trello");
+    public String buildSchedulerEmail(String message) {
 
         Context context = new Context();
         context.setVariable("message", message);
         context.setVariable("tasks_url", "http://localhost:8888/tasks_frontend/");
         context.setVariable("button", "Visit website");
         context.setVariable("admin_name", adminConfig.getAdminName());
-        context.setVariable("preview_message", "Trello Card created");
+        context.setVariable("preview_message", "Once a day info message");
         context.setVariable("company_name", companyConfig.getCompanyName());
         context.setVariable("company_goal", companyConfig.getCompanyGoal());
         context.setVariable("company_email", companyConfig.getCompanyEmail());
@@ -44,7 +36,7 @@ public class MailCreatorService {
         context.setVariable("show_button", false);
         context.setVariable("is_friend", false);
         context.setVariable("admin_config", adminConfig);
-        context.setVariable("application_functionality", functionality);
-        return templateEngine.process("mail/created-trello-card-mail", context);
+        context.setVariable("goodbye_message", "Bye bye");
+        return templateEngine.process("mail/email-scheduler", context);
     }
 }
