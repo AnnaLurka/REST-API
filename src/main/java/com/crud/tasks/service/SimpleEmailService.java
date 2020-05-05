@@ -28,10 +28,10 @@ public class SimpleEmailService {
     public void send(final Mail mail) {
         LOGGER.info("Starting email preparation...");
         try {
-            if() {
-                javaMailSender.send(createMimeMessage(mail));
-        } else {
+            if(mail.getSubject().equals("Tasks: Once a day email")) {
                 javaMailSender.send(createSchedulersMimeMessage(mail));
+        } else {
+                javaMailSender.send(createMimeMessage(mail));
             }
 
             LOGGER.info("Email has been sent.");

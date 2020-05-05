@@ -3,6 +3,7 @@ package com.crud.tasks.scheduler;
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.repository.TaskRepository;
+import com.crud.tasks.service.SchedulersMailCreatorService;
 import com.crud.tasks.service.SimpleEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,7 +24,7 @@ public class EmailScheduler {
     private AdminConfig adminConfig;
 
     //@Scheduled(fixedDelay = 10000)
-    @Scheduled(cron = "0 21 21 * * *")
+    @Scheduled(cron = "0 09 23 * * *")
     public void sendInformationEmail() {
         long size = taskRepository.count();
 

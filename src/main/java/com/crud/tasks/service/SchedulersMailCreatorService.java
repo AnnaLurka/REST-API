@@ -23,20 +23,20 @@ public class SchedulersMailCreatorService{
 
     public String buildSchedulerEmail(String message) {
 
-        Context context = new Context();
-        context.setVariable("message", message);
-        context.setVariable("tasks_url", "http://localhost:8888/tasks_frontend/");
-        context.setVariable("button", "Visit website");
-        context.setVariable("admin_name", adminConfig.getAdminName());
-        context.setVariable("preview_message", "Once a day info message");
-        context.setVariable("company_name", companyConfig.getCompanyName());
-        context.setVariable("company_goal", companyConfig.getCompanyGoal());
-        context.setVariable("company_email", companyConfig.getCompanyEmail());
-        context.setVariable("company_phone", companyConfig.getCompanyPhone());
-        context.setVariable("show_button", false);
-        context.setVariable("is_friend", false);
-        context.setVariable("admin_config", adminConfig);
-        context.setVariable("goodbye_message", "Bye bye");
-        return templateEngine.process("mail/email-scheduler", context);
+        Context scheduleContext = new Context();
+        scheduleContext.setVariable("message", message);
+        scheduleContext.setVariable("tasks_url", "http://localhost:8888/tasks_frontend/");
+        scheduleContext.setVariable("button", "Visit website");
+        scheduleContext.setVariable("admin_name", adminConfig.getAdminName());
+        scheduleContext.setVariable("preview_message", "Once a day info message");
+        scheduleContext.setVariable("company_name", companyConfig.getCompanyName());
+        scheduleContext.setVariable("company_goal", companyConfig.getCompanyGoal());
+        scheduleContext.setVariable("company_email", companyConfig.getCompanyEmail());
+        scheduleContext.setVariable("company_phone", companyConfig.getCompanyPhone());
+        scheduleContext.setVariable("show_button", false);
+        scheduleContext.setVariable("is_friend", false);
+        scheduleContext.setVariable("admin_config", adminConfig);
+        scheduleContext.setVariable("goodbye_message", "Bye bye");
+        return templateEngine.process("mail/email-scheduler", scheduleContext);
     }
 }
