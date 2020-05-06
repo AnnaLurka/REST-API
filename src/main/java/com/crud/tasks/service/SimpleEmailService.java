@@ -49,7 +49,7 @@ public class SimpleEmailService {
         };
     }
 
-    private MimeMessagePreparator createSchedulersMimeMessage(final Mail mail) {
+    MimeMessagePreparator createSchedulersMimeMessage(final Mail mail) {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
