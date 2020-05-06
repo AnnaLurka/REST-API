@@ -28,12 +28,17 @@ public class SimpleEmailService {
     public void send(final Mail mail) {
         LOGGER.info("Starting email preparation...");
         try {
-            if(mail.getSubject().equals("Tasks: Once a day email")) {
-                javaMailSender.send(createSchedulersMimeMessage(mail));
-        } else {
-                javaMailSender.send(createMimeMessage(mail));
-            }
+            javaMailSender.send(createMimeMessage(mail));
+            LOGGER.info("Email has been sent.");
+        } catch (MailException e) {
+            LOGGER.error("Failed to process email sending.", e.getMessage(), e);
+        }
+    }
 
+    public void sendTasksSchedulersMessage(final Mail mail) {
+        LOGGER.info("Starting email preparation...");
+        try {
+            javaMailSender.send(createSchedulersMimeMessage(mail));
             LOGGER.info("Email has been sent.");
         } catch (MailException e) {
             LOGGER.error("Failed to process email sending.", e.getMessage(), e);
